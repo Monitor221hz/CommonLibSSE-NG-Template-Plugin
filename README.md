@@ -1,7 +1,9 @@
 
 # CommonLibSSE NG
 
-Because this uses [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSSE-NG), it supports Skyrim SE, AE, GOG, and VR.
+Because this uses [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSSE-NG), it supports Skyrim SE, AE, GOG, and VR. 
+
+Hook IDs and offsets must still be found manually for each version.
 
 # Requirements
 
