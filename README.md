@@ -13,8 +13,6 @@ Because this uses [CommonLibSSE NG](https://github.com/CharmedBaryon/CommonLibSS
     - Name: `VCPKG_ROOT`  
       Value: `C:\path\to\wherever\your\vcpkg\folder\is`
 
-<img src="https://raw.githubusercontent.com/SkyrimDev/Images/main/images/screenshots/Setting%20Environment%20Variables/VCPKG_ROOT.png" height="150">
-
 ## Opening the project
 
 Once you have Visual Studio 2022 installed, you can open this folder in basically any C++ editor, e.g. [VS Code](https://code.visualstudio.com/) or [CLion](https://www.jetbrains.com/clion/) or [Visual Studio](https://visualstudio.microsoft.com/)
