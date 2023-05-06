@@ -1,7 +1,15 @@
 #pragma once
 
+#include <Xinput.h>
+using namespace RE;
+
 namespace KeyUtil 
 {
+
+    enum class MACRO_LIMITS {
+        kMaxMacros = static_cast<int>(KBM_OFFSETS::kMacro_GamepadOffset) + static_cast<int>(KBM_OFFSETS::kMacro_NumGamepadButtons)
+    };
+
     enum class KBM_OFFSETS {
 		// first 256 for keyboard, then 8 mouse buttons, then mouse wheel up, wheel down, then 16 gamepad buttons
 		kMacro_KeyboardOffset = 0,		// not actually used, just for self-documentation
@@ -16,7 +24,7 @@ namespace KeyUtil
 		kMacro_GamepadOffset = kMacro_MouseWheelOffset + kMacro_MouseWheelDirections,	// 266
 		kMacro_NumGamepadButtons = 16,
 
-		kMaxMacros = kMacro_GamepadOffset + kMacro_NumGamepadButtons	// 282
+			// 282
 	};
 
 	enum class GAMEPAD_OFFSETS {
@@ -37,6 +45,34 @@ namespace KeyUtil
 		kGamepadButtonOffset_LT,
 		kGamepadButtonOffset_RT	// 281
 	};
+
+
+    struct Interpreter
+    {
+        public: 
+        static uint32_t GamepadMaskToKeycode(uint32_t keyMask) {
+	switch (keyMask) {
+		case XINPUT_GAMEPAD_DPAD_UP:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_UP);
+		case XINPUT_GAMEPAD_DPAD_DOWN:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_DOWN);
+		case XINPUT_GAMEPAD_DPAD_LEFT:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_LEFT);
+		case XINPUT_GAMEPAD_DPAD_RIGHT:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_RIGHT);
+		case XINPUT_GAMEPAD_START:			return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_START);
+		case XINPUT_GAMEPAD_BACK:			return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_BACK);
+		case XINPUT_GAMEPAD_LEFT_THUMB:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LEFT_THUMB);
+		case XINPUT_GAMEPAD_RIGHT_THUMB:	return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RIGHT_THUMB);
+		case XINPUT_GAMEPAD_LEFT_SHOULDER:	return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LEFT_SHOULDER);
+		case XINPUT_GAMEPAD_RIGHT_SHOULDER: return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RIGHT_SHOULDER);
+		case XINPUT_GAMEPAD_A:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_A);
+		case XINPUT_GAMEPAD_B:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_B);
+		case XINPUT_GAMEPAD_X:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_X);
+		case XINPUT_GAMEPAD_Y:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_Y);
+		case 0x9:							return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LT);
+		case 0xA:							return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RT);
+		default:							return 282; // Invalid
+	}
+}
+
+    };
 
 }
 namespace PerkUtil {
