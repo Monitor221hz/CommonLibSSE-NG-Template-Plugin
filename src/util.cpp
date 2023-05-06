@@ -1,13 +1,14 @@
 #pragma once
 
-#include <Xinput.h>
+
+
 using namespace RE;
 
 namespace KeyUtil 
 {
 
     enum class MACRO_LIMITS {
-        kMaxMacros = static_cast<int>(KBM_OFFSETS::kMacro_GamepadOffset) + static_cast<int>(KBM_OFFSETS::kMacro_NumGamepadButtons)
+        kMaxMacros = 282
     };
 
     enum class KBM_OFFSETS {
@@ -52,20 +53,20 @@ namespace KeyUtil
         public: 
         static uint32_t GamepadMaskToKeycode(uint32_t keyMask) {
 	switch (keyMask) {
-		case XINPUT_GAMEPAD_DPAD_UP:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_UP);
-		case XINPUT_GAMEPAD_DPAD_DOWN:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_DOWN);
-		case XINPUT_GAMEPAD_DPAD_LEFT:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_LEFT);
-		case XINPUT_GAMEPAD_DPAD_RIGHT:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_RIGHT);
-		case XINPUT_GAMEPAD_START:			return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_START);
-		case XINPUT_GAMEPAD_BACK:			return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_BACK);
-		case XINPUT_GAMEPAD_LEFT_THUMB:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LEFT_THUMB);
-		case XINPUT_GAMEPAD_RIGHT_THUMB:	return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RIGHT_THUMB);
-		case XINPUT_GAMEPAD_LEFT_SHOULDER:	return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LEFT_SHOULDER);
-		case XINPUT_GAMEPAD_RIGHT_SHOULDER: return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RIGHT_SHOULDER);
-		case XINPUT_GAMEPAD_A:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_A);
-		case XINPUT_GAMEPAD_B:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_B);
-		case XINPUT_GAMEPAD_X:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_X);
-		case XINPUT_GAMEPAD_Y:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_Y);
+		case 0x001:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_UP);
+		case 0x002:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_DOWN);
+		case 0x004:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_LEFT);
+		case 0x008:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_DPAD_RIGHT);
+		case 0x0010:			return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_START);
+		case 0x0020:			return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_BACK);
+		case 0x0040:		return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LEFT_THUMB);
+		case 0x0080:	return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RIGHT_THUMB);
+		case 0x0100:	return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LEFT_SHOULDER);
+		case 0x0200: return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RIGHT_SHOULDER);
+		case 0x1000:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_A);
+		case 0x2000:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_B);
+		case 0x4000:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_X);
+		case 0x8000:				return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_Y);
 		case 0x9:							return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_LT);
 		case 0xA:							return static_cast<int>(GAMEPAD_OFFSETS::kGamepadButtonOffset_RT);
 		default:							return 282; // Invalid
