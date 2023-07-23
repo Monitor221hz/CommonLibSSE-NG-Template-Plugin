@@ -4,6 +4,7 @@
     "version-string": "0.0.1",
     "dependencies": [
         "commonlibsse-ng",
-        "simpleini"
+        "simpleini",
+        "nlohmann-json"
     ]
 }
