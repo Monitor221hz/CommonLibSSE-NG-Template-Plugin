@@ -302,40 +302,16 @@ namespace AnimUtil
 
 namespace FormUtil
 {
-    struct Form
+    struct Parse
     {
             static RE::TESForm *GetFormFromMod(std::string modname, uint32_t formid)
             {
             if (!modname.length() || !formid)
                 return nullptr;
             RE::TESDataHandler *dh = RE::TESDataHandler::GetSingleton();
-            RE::TESFile *modFile = nullptr;
-            for (auto it = dh->files.begin(); it != dh->files.end(); ++it)
-            {
-                RE::TESFile *f = *it;
-                if (strcmp(f->fileName, modname.c_str()) == 0)
-                {
-                    modFile = f;
-                    break;
-                }
-            }
-            if (!modFile)
-                return nullptr;
-            uint8_t modIndex = modFile->compileIndex;
-            uint32_t id = formid;
-            if (modIndex < 0xFE)
-            {
-                id |= ((uint32_t)modIndex) << 24;
-            }
-            else
-            {
-                uint16_t lightModIndex = modFile->smallFileCompileIndex;
-                if (lightModIndex != 0xFFFF)
-                {
-                    id |= 0xFE000000 | (uint32_t(lightModIndex) << 12);
-                }
-            }
-            return RE::TESForm::LookupByID(id);
+
+
+            return dh ? dh->LookupForm(formid, modname) : nullptr; 
             }
 
             static RE::TESForm *GetFormFromMod(std::string modname, std::string formIDString)
@@ -354,6 +330,30 @@ namespace FormUtil
             static RE::TESForm *GetFormFromConfigString(std::string str)
             {
                 return GetFormFromConfigString(str, "~"sv); 
+            }
+
+            static RE::FormID GetFormIDFromMod(std::string relativeFormIDString, std::string modName)
+            {
+                if (relativeFormIDString.length() == 0) return -1; 
+
+
+                uint32_t relativeFormID = std::stoi(relativeFormIDString,  0, 16); 
+                auto* dataHandler = TESDataHandler::GetSingleton(); 
+
+                if (!dataHandler) return -1; 
+
+                return dataHandler->LookupFormID(relativeFormID, modName); 
+            }
+
+            static RE::FormID GetFormIDFromConfigString(std::string str, std::string_view delimiter)
+            {
+                std::vector<std::string> splitData = Util::String::Split(str, delimiter); 
+                if (splitData.size() < 2) return -1; 
+                return GetFormIDFromMod(splitData[0], splitData[1]);
+            }
+            static RE::FormID GetFormIDFromConfigString(std::string str)
+            {
+                return GetFormIDFromConfigString(str, "~"sv); 
             }
 
 
