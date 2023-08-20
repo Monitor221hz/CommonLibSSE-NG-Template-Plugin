@@ -14,6 +14,7 @@ Hook IDs and offsets must still be found manually for each version.
   - 3. Edit your system or user Environment Variables and add a new one:
     - Name: `VCPKG_ROOT`  
       Value: `C:\path\to\wherever\your\vcpkg\folder\is`
+  - The latest version of vcpkg needs a default repository defined in the json. If you're using an older version of vcpkg, simply delete the default repository definition in `vcpkg-configuration.json`
 
 ## Opening the project
 
