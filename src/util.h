@@ -199,8 +199,27 @@ namespace Util
 
 namespace MathUtil
 {
+    [[nodiscard]] inline float Clamp(float value, float min, float max)
+    {
+        return value < min ? min : value < max ? value
+                                               : max;
+    }
+    [[nodiscard]] inline RE::NiPoint3 GetNiPoint3(RE::hkVector4 a_hkVector4)
+    {
+        float quad[4];
+        _mm_store_ps(quad, a_hkVector4.quad);
+        return RE::NiPoint3{quad[0], quad[1], quad[2]};
+    }
+
     struct Angle 
     {
+        struct AngleZX
+        {
+            double z;
+            double x;
+            double distance;
+        };
+
         [[nodiscard]] constexpr static float DegreeToRadian(float a_angle)
         {
             return a_angle * 0.017453292f;
@@ -242,7 +261,44 @@ namespace MathUtil
 
             // return fmod(a_angle, TWO_PI) >= 0 ? (a_angle < PI) ? a_angle : a_angle - TWO_PI : (a_angle >= -PI) ? a_angle : a_angle + TWO_PI;
         }
+        static float GetAngle(RE::NiPoint2 &a, RE::NiPoint2 &b)
+        {
+            return atan2(a.Cross(b), a.Dot(b));
+        }
+        static void GetAngle(const RE::NiPoint3 &a_from, const RE::NiPoint3 &a_to, AngleZX &angle)
+        {
+            const auto x = a_to.x - a_from.x;
+            const auto y = a_to.y - a_from.y;
+            const auto z = a_to.z - a_from.z;
+            const auto xy = sqrt(x * x + y * y);
+
+            angle.z = atan2(x, y);
+            angle.x = atan2(-z, xy);
+            angle.distance = sqrt(xy * xy + z * z);
+        }
     }; 
+
+    struct Interp
+    {
+        [[nodiscard]] static float InterpTo(float a_current, float a_target, float a_deltaTime, float a_interpSpeed)
+        {
+            if (a_interpSpeed <= 0.f)
+            {
+                return a_target;
+            }
+
+            const float distance = a_target - a_current;
+
+            if (distance * distance < FLT_EPSILON)
+            {
+                return a_target;
+            }
+
+            const float delta = distance * Clamp(a_deltaTime * a_interpSpeed, 0.f, 1.f);
+
+            return a_current + delta;
+        }
+    };
 }
 namespace ObjectUtil
 {
@@ -501,4 +557,3 @@ namespace NifUtil
 
    
 }
-
