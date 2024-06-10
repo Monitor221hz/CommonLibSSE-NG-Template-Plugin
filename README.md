@@ -7,7 +7,7 @@ Hook IDs and offsets must still be found manually for each version.
 
 # Requirements
 
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) (_the free Community edition_)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) (_the free Community edition_) or [Visual Studio Code](https://code.visualstudio.com/)
 - [`vcpkg`](https://github.com/microsoft/vcpkg)
   - 1. Clone the repository using git OR [download it as a .zip](https://github.com/microsoft/vcpkg/archive/refs/heads/master.zip)
   - 2. Go into the `vcpkg` folder and double-click on `bootstrap-vcpkg.bat`
