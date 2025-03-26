@@ -7,7 +7,7 @@ Hook IDs and offsets must still be found manually for each version.
 
 # Requirements
 
-- [Visual Studio 2022](https://visualstudio.microsoft.com/) (_the free Community edition_)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) (_the free Community edition_) or [Visual Studio Code](https://code.visualstudio.com/)
 - [`vcpkg`](https://github.com/microsoft/vcpkg)
   - 1. Clone the repository using git OR [download it as a .zip](https://github.com/microsoft/vcpkg/archive/refs/heads/master.zip)
   - 2. Go into the `vcpkg` folder and double-click on `bootstrap-vcpkg.bat`
@@ -43,4 +43,29 @@ into your "`mods`" folder:
   e.g. `C:\Users\<user>\AppData\Local\ModOrganizer\Skyrim Special Edition\mods`  
   e.g. `C:\Users\<user>\AppData\Roaming\Vortex\skyrimse\mods`
 
+# Debugging
+In order to attach a debugger, you must own a legal copy of Skyrim with the exe stripped using Steamless. Note that users with MO2 should have `-forcesteamloader` as an SKSE argument for plugins to load normally with a stub-removed exe.
 
+For VSCode users, they must have a `launch.json` file like the one below:
+
+```json
+
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "C++ Debugger",
+            "type": "cppvsdbg",
+            "request": "attach"
+        },
+        {
+            "type": "cmake",
+            "request": "launch",
+            "name": "Debug portfile(s)",
+            "cmakeDebugType": "external",
+            "pipeName": "\\\\.\\pipe\\vcpkg_ext_portfile_dbg",
+            "preLaunchTask": "Debug vcpkg commands"
+        }
+    ]
+}
+```
