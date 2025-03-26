@@ -1,5 +1,5 @@
 #pragma once
-
+#include <ranges>
 
 #define PI 3.1415926535897932f
 #define TWOTHIRDS_PI 2.0943951023931955f

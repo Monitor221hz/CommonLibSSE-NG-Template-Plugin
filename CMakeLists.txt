@@ -35,6 +35,7 @@ endif()
 
 # Setup your SKSE plugin as an SKSE plugin!
 find_package(CommonLibSSE CONFIG REQUIRED)
+find_package(directxtk CONFIG REQUIRED)
 include(cmake/headerlist.cmake)
 include(cmake/sourcelist.cmake)
 add_commonlibsse_plugin(${PROJECT_NAME} SOURCES ${headers} ${sources}) # <--- specifies plugin.cpp
