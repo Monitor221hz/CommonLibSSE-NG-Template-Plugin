@@ -276,6 +276,51 @@ namespace MathUtil
             angle.x = atan2(-z, xy);
             angle.distance = sqrt(xy * xy + z * z);
         }
+        static RE::NiPoint3 RotateVector(const RE::NiPoint3& a_vec, const RE::NiQuaternion& a_quat)
+        {
+            //http://people.csail.mit.edu/bkph/articles/Quaternions.pdf
+            const RE::NiPoint3 Q{ a_quat.x, a_quat.y, a_quat.z };
+            const RE::NiPoint3 T = Q.Cross(a_vec) * 2.f;
+            return a_vec + (T * a_quat.w) + Q.Cross(T);
+        }
+    
+        static RE::NiPoint3 GetForwardVector(const RE::NiQuaternion& a_quat) {
+            return RotateVector({ 0.f, 1.f, 0.f }, a_quat);
+        }
+        // private:
+        // std::vector<std::shared_ptr<DetectionIndicator>> 
+        static NiMatrix3 QuaternionToMatrix(const NiQuaternion& a_quat)
+        {
+            float sqw = a_quat.w * a_quat.w;
+            float sqx = a_quat.x * a_quat.x;
+            float sqy = a_quat.y * a_quat.y;
+            float sqz = a_quat.z * a_quat.z;
+        
+            NiMatrix3 ret;
+        
+            // invs (inverse square length) is only required if quaternion is not already normalised
+            float invs = 1.f / (sqx + sqy + sqz + sqw);
+            ret.entry[0][0] = (sqx - sqy - sqz + sqw) * invs;  // since sqw + sqx + sqy + sqz =1/invs*invs
+            ret.entry[1][1] = (-sqx + sqy - sqz + sqw) * invs;
+            ret.entry[2][2] = (-sqx - sqy + sqz + sqw) * invs;
+        
+            float tmp1 = a_quat.x * a_quat.y;
+            float tmp2 = a_quat.z * a_quat.w;
+            ret.entry[1][0] = 2.f * (tmp1 + tmp2) * invs;
+            ret.entry[0][1] = 2.f * (tmp1 - tmp2) * invs;
+        
+            tmp1 = a_quat.x * a_quat.z;
+            tmp2 = a_quat.y * a_quat.w;
+            ret.entry[2][0] = 2.f * (tmp1 - tmp2) * invs;
+            ret.entry[0][2] = 2.f * (tmp1 + tmp2) * invs;
+            tmp1 = a_quat.y * a_quat.z;
+            tmp2 = a_quat.x * a_quat.w;
+            ret.entry[2][1] = 2.f * (tmp1 + tmp2) * invs;
+            ret.entry[1][2] = 2.f * (tmp1 - tmp2) * invs;
+        
+            return ret;
+        }
+
     }; 
 
     struct Interp
