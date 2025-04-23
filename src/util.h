@@ -210,6 +210,10 @@ namespace MathUtil
         _mm_store_ps(quad, a_hkVector4.quad);
         return RE::NiPoint3{quad[0], quad[1], quad[2]};
     }
+    [[nodiscard]] inline bool ApproximatelyEqual(float A, float B)
+    {
+        return ((A - B) < FLT_EPSILON) && ((B - A) < FLT_EPSILON);
+    }
 
     struct Angle 
     {
